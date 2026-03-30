@@ -1,0 +1,25 @@
+{
+  "homepage": {
+    "item_selector": "div.item",
+    "title_selector": "h2 a[href*='/article/']",
+    "desc_selector": "p.text-justify",
+    "logo_selector": ".item-header img",
+    "time_selector": ".item-meta-item"
+  },
+  "detail": {
+    "title_selector": ".composs-main-content h1, h1",
+    "source_selector": ".source_text",
+    "summary_selector": "blockquote",
+    "meta_description_selector": "meta[name='description']",
+    "content_container_selector": ".composs-main-content",
+    "content_descendant_paragraph_selector": "div p",
+    "content_direct_paragraph_tag": "p"
+  },
+  "defaults": {
+    "primary_class": "生物谷资讯",
+    "secondary_class_fallback": "未知栏目",
+    "source_site": "bioon",
+    "user_agent": "Mozilla/5.0",
+    "request_timeout_seconds": 30
+  }
+}

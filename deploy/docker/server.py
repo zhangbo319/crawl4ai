@@ -56,6 +56,8 @@ from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.staticfiles import StaticFiles
 from job import init_job_router
+from bioon_news import build_router as build_bioon_news_router
+from news_admin_router import build_news_admin_router
 
 from mcp_bridge import attach_mcp, mcp_resource, mcp_template, mcp_tool
 
@@ -305,6 +307,8 @@ def _safe_eval_config(expr: str) -> dict:
 
 # ── job router ──────────────────────────────────────────────
 app.include_router(init_job_router(redis, config, token_dep))
+app.include_router(build_bioon_news_router(token_dep=token_dep))
+app.include_router(build_news_admin_router(token_dep=token_dep))
 
 # ── monitor router ──────────────────────────────────────────
 from monitor_routes import router as monitor_router
