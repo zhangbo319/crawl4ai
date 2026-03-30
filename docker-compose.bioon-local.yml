@@ -1,0 +1,14 @@
+services:
+  crawl4ai:
+    image: crawl4ai-local:af648e1
+    container_name: crawl4ai-bioon
+    command:
+      - /bin/bash
+      - -lc
+      - python -m pip install --user --no-cache-dir aiomysql croniter && exec supervisord -c supervisord.conf
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - /dev/shm:/dev/shm
+      - ./deploy/docker:/app
+      - ./runtime:/app/runtime

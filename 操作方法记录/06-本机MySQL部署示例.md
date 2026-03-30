@@ -39,15 +39,24 @@ docker run -d \
 - `runtime` 挂载后，抓取结果和状态文件会保留在宿主机
 
 ## `docker compose` 示例
-如果你使用项目自带的 `docker-compose.yml`，推荐命令：
+如果你要复用当前仓库里的定制代码，推荐使用基础文件叠加本地覆盖文件：
 
 ```bash
-docker compose up -d --build
+docker compose -f docker-compose.yml -f docker-compose.bioon-local.yml up -d
 ```
 
 前提：
 - 项目根目录已有 `.llm.env`
 - `.llm.env` 里已经写入上面的 MySQL 配置
+- 本地已经存在基础镜像 `crawl4ai-local:af648e1`
+
+这个方案的特点是：
+- 用 `docker compose` 管理容器生命周期
+- 继续挂载 `./deploy/docker:/app`，直接使用你当前仓库里的改造代码
+- 挂载 `./runtime:/app/runtime`，保留抓取结果和状态文件
+- 启动时会补装 `aiomysql` 和 `croniter`，避免旧基础镜像缺少这两个新增依赖
+
+如果你后续要切换为“完全由 Dockerfile 构建镜像，不挂载本地代码”，再单独走 `docker compose up -d --build` 的全镜像方案。
 
 如果你的 Docker 环境无法自动解析 `host.docker.internal`，先确认宿主机支持 `host-gateway`；不支持时，改成宿主机实际局域网 IP。
 
